@@ -1,0 +1,22 @@
+---
+- name: Check DSE repository configuration
+  ansible.builtin.assert:
+    that:
+      - dse_repository_url is defined
+      - dse_repository_url | length > 0
+      - dse_repository_url != "REPLACE_WITH_DSE_REPOSITORY"
+    fail_msg: >-
+      Configure dse_repository_url in group_vars/dse.yml before installing
+      DataStax Enterprise.
+
+- name: Configure DSE repository
+  ansible.builtin.debug:
+    msg:
+      - "Configure the official DataStax Enterprise 6.9 repository using"
+      - "your organization's approved repository/access configuration."
+      - "Repository variable: {{ dse_repository_url }}"
+
+- name: Install DataStax Enterprise
+  ansible.builtin.dnf:
+    name: "{{ dse_package_name }}"
+    state: present

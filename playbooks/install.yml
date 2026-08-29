@@ -1,0 +1,7 @@
+---
+- name: Install DataStax Enterprise 6.9
+  hosts: dse
+  become: true
+  roles:
+    - role: dse
+      tasks_from: install

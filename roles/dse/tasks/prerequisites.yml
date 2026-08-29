@@ -1,0 +1,37 @@
+---
+- name: Install required Linux packages
+  ansible.builtin.dnf:
+    name:
+      - curl
+      - wget
+      - tar
+      - gzip
+      - java-8-openjdk
+    state: present
+
+- name: Create Cassandra group
+  ansible.builtin.group:
+    name: cassandra
+    state: present
+
+- name: Create Cassandra user
+  ansible.builtin.user:
+    name: cassandra
+    group: cassandra
+    system: true
+    shell: /sbin/nologin
+    state: present
+
+- name: Create Cassandra directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: cassandra
+    group: cassandra
+    mode: "0755"
+  loop:
+    - "{{ dse_data_dir }}"
+    - "{{ dse_data_dir }}/data"
+    - "{{ dse_data_dir }}/commitlog"
+    - "{{ dse_data_dir }}/saved_caches"
+    - "{{ dse_log_dir }}"

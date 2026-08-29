@@ -1,0 +1,40 @@
+---
+- name: Flush pending DSE restart handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable DSE service
+  ansible.builtin.systemd:
+    name: "{{ dse_service_name }}"
+    enabled: true
+    daemon_reload: true
+
+- name: Start DSE service
+  ansible.builtin.systemd:
+    name: "{{ dse_service_name }}"
+    state: started
+
+- name: Wait for Cassandra CQL port
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: "{{ dse_cql_port }}"
+    delay: 10
+    timeout: 120
+
+- name: Check DSE service
+  ansible.builtin.systemd:
+    name: "{{ dse_service_name }}"
+  register: dse_service
+
+- name: Display DSE service status
+  ansible.builtin.debug:
+    msg: "DSE service state: {{ dse_service.status.ActiveState }}"
+
+- name: Run nodetool status
+  ansible.builtin.command:
+    cmd: nodetool status
+  register: nodetool_result
+  changed_when: false
+
+- name: Display cluster status
+  ansible.builtin.debug:
+    var: nodetool_result.stdout_lines

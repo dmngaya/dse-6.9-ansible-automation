@@ -1,0 +1,19 @@
+dse_version: "6.9"
+
+dse_cluster_name: "DSE-6.9-Training-Cluster"
+
+dse_datacenter: "DC1"
+
+dse_rack: "RACK1"
+
+dse_listen_address: "{{ ansible_host }}"
+
+dse_rpc_address: "0.0.0.0"
+
+dse_seed_nodes:
+  - "192.168.56.101"
+  - "192.168.56.102"
+
+# Configure this according to your organization's approved
+# DataStax Enterprise 6.9 repository/access method.
+dse_repository_url: "REPLACE_WITH_DSE_REPOSITORY"

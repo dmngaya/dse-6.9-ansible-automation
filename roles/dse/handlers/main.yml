@@ -1,0 +1,5 @@
+---
+- name: Restart DSE
+  ansible.builtin.systemd:
+    name: "{{ dse_service_name }}"
+    state: restarted

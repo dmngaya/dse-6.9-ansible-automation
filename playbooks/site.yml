@@ -1,0 +1,6 @@
+---
+- name: Deploy and configure DataStax Enterprise 6.9
+  hosts: dse
+  become: true
+  roles:
+    - dse

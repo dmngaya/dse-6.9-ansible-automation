@@ -1,0 +1,12 @@
+---
+- name: Run prerequisites
+  ansible.builtin.include_tasks: prerequisites.yml
+
+- name: Run installation
+  ansible.builtin.include_tasks: install.yml
+
+- name: Run configuration
+  ansible.builtin.include_tasks: configure.yml
+
+- name: Run validation
+  ansible.builtin.include_tasks: validate.yml

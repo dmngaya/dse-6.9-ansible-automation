@@ -1,0 +1,7 @@
+---
+- name: Validate DSE 6.9 cluster
+  hosts: dse
+  become: true
+  roles:
+    - role: dse
+      tasks_from: validate

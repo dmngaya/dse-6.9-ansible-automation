@@ -1,0 +1,34 @@
+---
+- name: Configure cluster name
+  ansible.builtin.replace:
+    path: "{{ dse_config_file }}"
+    regexp: '^cluster_name:.*'
+    replace: "cluster_name: '{{ dse_cluster_name }}'"
+  notify: Restart DSE
+
+- name: Configure listen address
+  ansible.builtin.replace:
+    path: "{{ dse_config_file }}"
+    regexp: '^listen_address:.*'
+    replace: "listen_address: '{{ dse_listen_address }}'"
+  notify: Restart DSE
+
+- name: Configure RPC address
+  ansible.builtin.replace:
+    path: "{{ dse_config_file }}"
+    regexp: '^rpc_address:.*'
+    replace: "rpc_address: '{{ dse_rpc_address }}'"
+  notify: Restart DSE
+
+- name: Configure seed nodes
+  ansible.builtin.replace:
+    path: "{{ dse_config_file }}"
+    regexp: '^\s*-\s*seeds:.*'
+    replace: "      - seeds: '{{ dse_seed_nodes | join(',') }}'"
+  notify: Restart DSE
+
+- name: Display datacenter and rack
+  ansible.builtin.debug:
+    msg:
+      - "Datacenter: {{ dse_datacenter }}"
+      - "Rack: {{ dse_rack }}"

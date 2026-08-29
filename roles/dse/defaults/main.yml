@@ -1,0 +1,14 @@
+---
+dse_package_name: "dse"
+dse_service_name: "dse"
+
+dse_config_file: "/etc/dse/cassandra/cassandra.yaml"
+dse_cassandra_config_dir: "/etc/dse/cassandra"
+dse_config_dir: "/etc/dse"
+
+dse_data_dir: "/var/lib/cassandra"
+dse_log_dir: "/var/log/cassandra"
+
+dse_cql_port: 9042
+
+dse_repository_url: "REPLACE_WITH_DSE_REPOSITORY"
